@@ -55,3 +55,7 @@ Then:
 
 - `dotnet build -f net10.0-android`
 
+## Screenshot
+
+![Screenshot](./Resources/Images/screenshot.jpg)
+
