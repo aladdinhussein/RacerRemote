@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:RacerRemote.Controls"
+             x:Class="RacerRemote.MainPage"
+             Title="Drive">
+
+    <Grid RowDefinitions="Auto,*" Padding="16" RowSpacing="12">
+
+        <!-- Top bar -->
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" ColumnSpacing="12">
+            <VerticalStackLayout Spacing="2">
+                <!--<Label Text="Racer Remote" FontSize="22" FontAttributes="Bold" />-->
+                <Label Text="{Binding Status}" Opacity="0.75" FontSize="12" LineBreakMode="TailTruncation" />
+            </VerticalStackLayout>
+
+            <ImageButton Grid.Column="1"
+                         Clicked="OnSettingsClicked"
+                         BackgroundColor="Transparent"
+                         Padding="8"
+                         HeightRequest="44"
+                         WidthRequest="44">
+                <ImageButton.Source>
+                    <FontImageSource FontFamily="Segoe MDL2 Assets"
+                                     Glyph="&#xE702;"
+                                     Color="{AppThemeBinding Light={StaticResource OnSurface}, Dark={StaticResource OnSurfaceDark}}"
+                                     Size="22" />
+                </ImageButton.Source>
+            </ImageButton>
+        </Grid>
+
+        <!-- Drive controls only -->
+        <Grid Grid.Row="1" Padding="0" RowDefinitions="Auto,*,Auto" RowSpacing="12">
+
+            <!-- Speed (top) -->
+            <Border Grid.Row="0" Style="{StaticResource CardBorder}">
+                <VerticalStackLayout Spacing="8" HorizontalOptions="Fill" VerticalOptions="Center">
+                    <Label Text="Speed" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <Label Text="{Binding MaxSpeed, StringFormat='{0:P0}'}" Opacity="0.8" HorizontalOptions="Center" />
+                    <Slider Minimum="0.2" Maximum="1" Value="{Binding MaxSpeed, Mode=TwoWay}" HorizontalOptions="Fill" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Joystick (middle) -->
+            <Border Grid.Row="1" Style="{StaticResource CardBorder}">
+                <Grid RowDefinitions="Auto,*" RowSpacing="10">
+                    <Label Text="Drive" HorizontalOptions="Center" Opacity="0.8" />
+
+                    <Border Grid.Row="1" Style="{StaticResource InputBorder}" Padding="0"
+                            HorizontalOptions="Center" VerticalOptions="Center">
+                        <Grid Padding="10">
+                            <controls:JoystickView WidthRequest="360"
+                                                  HeightRequest="360"
+                                                  HorizontalOptions="Center"
+                                                  VerticalOptions="Center"
+                                                  StickX="{Binding Turn, Mode=TwoWay}"
+                                                  StickY="{Binding Throttle, Mode=TwoWay}" />
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Steer (bottom) -->
+            <Border Grid.Row="2" Style="{StaticResource CardBorder}">
+                <VerticalStackLayout Spacing="6" HorizontalOptions="Fill" VerticalOptions="Center">
+                    <Label Text="Steer" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <Label Text="{Binding SteeringSensitivity, StringFormat='x{0:F2}'}" Opacity="0.8" HorizontalOptions="Center" />
+                    <Slider Minimum="0.5" Maximum="2.5" Value="{Binding SteeringSensitivity, Mode=TwoWay}" HorizontalOptions="Fill" />
+                </VerticalStackLayout>
+            </Border>
+
+        </Grid>
+
+    </Grid>
+</ContentPage>

@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.1.11312.151 d18.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RacerRemote", "RacerRemote.csproj", "{00671499-A058-D61D-1895-B82E9DFBB30F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{00671499-A058-D61D-1895-B82E9DFBB30F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00671499-A058-D61D-1895-B82E9DFBB30F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00671499-A058-D61D-1895-B82E9DFBB30F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{00671499-A058-D61D-1895-B82E9DFBB30F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00671499-A058-D61D-1895-B82E9DFBB30F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E5053FD8-43A6-4CDC-A706-1A064F3BED05}
+	EndGlobalSection
+EndGlobal

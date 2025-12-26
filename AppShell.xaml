@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="RacerRemote.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:RacerRemote"
+    FlyoutBehavior="Flyout"
+    Title="Racer Remote">
+
+    <FlyoutItem Title="Drive" Route="drive">
+        <ShellContent
+            Title="Drive"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="drive" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Bluetooth Connection" Route="bluetooth">
+        <ShellContent
+            Title="Bluetooth Connection"
+            ContentTemplate="{DataTemplate local:SettingsPage}"
+            Route="bluetooth" />
+    </FlyoutItem>
+
+</Shell>

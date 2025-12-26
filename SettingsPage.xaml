@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RacerRemote.SettingsPage"
+             Title="Bluetooth Connection">
+
+    <Grid Padding="16" RowDefinitions="Auto,Auto,Auto" RowSpacing="12">
+
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+            <VerticalStackLayout Spacing="2">
+                <Label Text="Bluetooth" FontAttributes="Bold" FontSize="18" />
+                <Label Text="{Binding DeviceCount, StringFormat='Devices found: {0}'}" Opacity="0.75" />
+            </VerticalStackLayout>
+
+            <ActivityIndicator Grid.Column="1"
+                               IsRunning="{Binding IsScanning}"
+                               IsVisible="{Binding IsScanning}"
+                               VerticalOptions="Center"
+                               HeightRequest="24"
+                               WidthRequest="24" />
+        </Grid>
+
+        <Border Grid.Row="1" Style="{StaticResource CardBorder}">
+            <VerticalStackLayout Spacing="12">
+
+                <Border Style="{StaticResource InputBorder}">
+                    <Picker Title="Select BLE device"
+                            ItemsSource="{Binding Devices}"
+                            ItemDisplayBinding="{Binding DisplayName}"
+                            SelectedItem="{Binding SelectedDevice}" />
+                </Border>
+
+                <Button Text="Rescan"
+                        Command="{Binding ScanCommand}"
+                        IsEnabled="{Binding IsNotScanning}" />
+
+                <Label Text="{Binding Status}" Opacity="0.75" />
+
+            </VerticalStackLayout>
+        </Border>
+
+        <Label Grid.Row="2"
+               Text="Scanning starts automatically. Selecting a device will connect to it."
+               Opacity="0.7" />
+
+    </Grid>
+</ContentPage>
