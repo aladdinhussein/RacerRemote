@@ -57,5 +57,5 @@ Then:
 
 ## Screenshot
 
-![Screenshot](./Resources/Images/screenshot.jpg)
+![Screenshot](./Resources/Images/Screenshot.jpg)
 
