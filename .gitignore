@@ -3,3 +3,5 @@ bin/
 
 obj/
 /.vs
+
+RacerRemote.csproj.user

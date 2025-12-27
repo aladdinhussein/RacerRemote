@@ -8,6 +8,7 @@ public sealed class ThumbtrollerMixer
     private const int AdcCenter = (AdcMax - AdcMin) / 2; // 1640
     private const int DeadzoneCounts = 150;
     private const int MaxSpeed = 80;
+    private const int MinMovingSpeed = 42;
 
     private int _prevMixerX;
     private int _prevMixerY;
@@ -54,7 +55,8 @@ public sealed class ThumbtrollerMixer
         rawMixerY = (int)(rawMixerY * turnGain);
 
         // Exponential smoothing: keep throttle stable, make steering a bit snappier.
-        var mixerX = SmoothMixer(rawMixerX, _prevMixerX, 0.85f);
+        // When the stick returns to center, stop immediately (avoid "coast" from smoothing).
+        var mixerX = rawMixerX == 0 ? 0 : SmoothMixer(rawMixerX, _prevMixerX, 0.85f);
         var mixerY = SmoothMixer(rawMixerY, _prevMixerY, 0.72f);
 
         // Progressive turning limits: allow more at low speed.
@@ -62,7 +64,7 @@ public sealed class ThumbtrollerMixer
         if (mixerY > maxTurn) mixerY = maxTurn;
         if (mixerY < -maxTurn) mixerY = -maxTurn;
 
-        _prevMixerX = mixerX;
+        _prevMixerX = rawMixerX == 0 ? 0 : mixerX;
         _prevMixerY = mixerY;
 
         // Build speed + direction (Thumbtroller encodes 1=forward, 0=reverse)
@@ -86,6 +88,16 @@ public sealed class ThumbtrollerMixer
             direction = 0;
             speedA = speed + mixerY;
             speedB = speed - mixerY;
+        }
+
+        // Racer won't move reliably below a certain PWM. If we're commanding movement,
+        // enforce a minimum per-wheel speed, while preserving steering differential.
+        // Only apply this when attempting to drive straight; when steering we allow lower
+        // per-wheel values so the differential steering doesn't get overridden.
+        if (mixerX != 0 && mixerY == 0)
+        {
+            speedA = ApplyMinMovingSpeed(speedA);
+            speedB = ApplyMinMovingSpeed(speedB);
         }
 
         // Sanitize (Thumbtroller only caps upper bound)
@@ -173,5 +185,21 @@ public sealed class ThumbtrollerMixer
         normalized = Math.Clamp(normalized, -1, 1);
         var halfRange = (AdcMax - AdcMin) / 2.0;
         return (int)Math.Round(AdcCenter + (normalized * halfRange));
+    }
+
+    private static int ApplyMinMovingSpeed(int wheelSpeed)
+    {
+        var abs = Math.Abs(wheelSpeed);
+        if (abs == 0)
+        {
+            return 0;
+        }
+
+        if (abs < MinMovingSpeed)
+        {
+            return wheelSpeed < 0 ? -MinMovingSpeed : MinMovingSpeed;
+        }
+
+        return wheelSpeed;
     }
 }
